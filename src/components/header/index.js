@@ -1,5 +1,6 @@
 import React from "react";
 import CartSideBar from "../../views/cart-sidebar";
+import Login from "../../views/auth/login";
 const Navigation = () => {
   return (
     <div>
@@ -70,7 +71,8 @@ const Navigation = () => {
         </nav>
       </header>
       {/* login popup */}
-      {/* <Login /> */}
+
+      <Login />
     </div>
   );
 };
