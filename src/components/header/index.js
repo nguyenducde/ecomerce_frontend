@@ -2,6 +2,13 @@ import React from "react";
 import CartSideBar from "../../views/cart-sidebar";
 import Login from "../../views/auth/login";
 const Navigation = () => {
+  const checkAuth = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      return true;
+    }
+    return false;
+  };
   return (
     <div>
       <header className="header clearfix">
@@ -52,14 +59,85 @@ const Navigation = () => {
               <div className="my-2 my-lg-0">
                 <ul className="list-inline main-nav-right">
                   <li className="list-inline-item">
-                    <a
-                      data-target="#bd-example-modal"
-                      data-toggle="modal"
-                      className="btn btn-link"
-                      //   style={token ? { display: "none" } : { display: "block" }}
-                    >
-                      <i className="mdi mdi-account-circle" /> Login/Sign Up
-                    </a>
+                    {checkAuth() ? (
+                      <>
+                        <div className="dropdown">
+                          <button
+                            className="btn btn-account dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            <i className="mdi mdi-account-circle px-2" />
+                            Prajwal
+                          </button>
+
+                          <div
+                            className="dropdown-menu"
+                            aria-labelledby="dropdownMenuButton"
+                          >
+                            <a className="dropdown-item" href="/account/view">
+                              <i className="uil uil-apps" />
+                              Dashboard
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              href="/account/profile"
+                            >
+                              <i
+                                className="mdi mdi-account-outline"
+                                aria-hidden="true"
+                              ></i>
+                              My Profile
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              href="/account/wishlist"
+                            >
+                              <i
+                                className="mdi mdi-heart-outline"
+                                aria-hidden="true"
+                              ></i>
+                              Wish List
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              href="/account/order/list"
+                            >
+                              <i
+                                className="mdi mdi-format-list-bulleted"
+                                aria-hidden="true"
+                              ></i>{" "}
+                              Orders List
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <span
+                              className="dropdown-item"
+                              // onClick={this.handleLogout}
+                            >
+                              <i
+                                className="mdi mdi-lock"
+                                aria-hidden="true"
+                              ></i>{" "}
+                              Logout
+                            </span>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <a
+                          href=""
+                          data-target="#bd-example-modal"
+                          data-toggle="modal"
+                          className="btn btn-link"
+                        >
+                          <i className="mdi mdi-account-circle" /> Login/Sign Up
+                        </a>
+                      </>
+                    )}
                   </li>
                   <li className="list-inline-item cart-btn">
                     <CartSideBar />

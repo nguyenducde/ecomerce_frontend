@@ -1,6 +1,5 @@
 import axios from "axios";
 import { API_URL } from "../config";
-
 const http = axios.create({
   baseURL: API_URL,
 });
@@ -8,20 +7,20 @@ const http = axios.create({
 http.defaults.headers.post["Content-Type"] = "application/json";
 
 http.interceptors.request.use(function (config) {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem("access_token");
   config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
 });
 
-http.interceptors.request.use(
+http.interceptors.response.use(
   async (response) => {
-    if (response.status > 200 && response.status < 300) {
+    if (response.status >= 200 && response.status < 300) {
       let data = response.data;
       if (data && data.user && data.user.role) {
         if (data.user.role !== "user") {
-          localStorage.removeItem("accessToken");
+          localStorage.removeItem("access_token");
           return Promise.reject({
-            status: false,
+            status: "error",
             message: "User doesn't have permission to access.",
           });
         }
@@ -30,17 +29,17 @@ http.interceptors.request.use(
     }
   },
   async (error) => {
+    console.log(error);
     if (error && error.message === "Network Error") {
-      console.error(error.message);
+      console.log(error.message);
     }
-
     const { response, request } = error;
-
     if (response) {
       if (response.status === 401) {
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem("access_token");
         window.location.href = "/login";
       }
+
       if (response.status >= 400 && response.status < 500) {
         return Promise.reject(response.data);
       } else if (request) {
@@ -50,4 +49,5 @@ http.interceptors.request.use(
     }
   }
 );
+
 export default http;

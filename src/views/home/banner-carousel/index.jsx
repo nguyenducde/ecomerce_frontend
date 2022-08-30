@@ -1,8 +1,11 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import {useSelector,useDispatch} from 'react-redux'
+import {toast} from 'react-toastify'
+import { ToastObjects } from '../../../utils/toast/toastObject';
+import homeServices from '../../../services/homeServices';
 
 function BannerSlider() {
     var settings = {
@@ -14,6 +17,26 @@ function BannerSlider() {
         slidesToShow: 1,
         slidesToScroll: 1
     };
+    
+    const dispatch=useDispatch();
+    
+    const sliders=useSelector(state=>state.home.sliders);
+    
+    useEffect(()=>{
+      const getSliders=async()=>{
+        try{
+            let res=await homeServices.getSliders(dispatch);
+            if(res && res.status){
+                toast.success(res.message,ToastObjects)
+            }
+          }  
+          catch(e){
+            toast.error(e.message,ToastObjects)
+          }
+      }
+     getSliders();
+      
+    },[])
     return  <div>
     <Slider {...settings}>
         <div className="owl-item">
