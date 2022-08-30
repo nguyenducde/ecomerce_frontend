@@ -4,18 +4,17 @@ import { toast } from "react-toastify";
 import { UPLOAD_URL } from "../../config";
 import http from "../../services/api";
 import { ToastObjects } from "../../utils/toast/toastObject";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import homeServices from "../../services/homeServices";
 function Footer() {
-  const [settings, setSettings] = useState("");
+  const dispatch = useDispatch();
+  const settings = useSelector((state) => state.home.settings);
   let categories = useSelector((state) => state.home.categories);
   categories = categories.slice(0, 6);
   useEffect(() => {
     const getSettings = async () => {
       try {
-        let res = await http.get("/api/v1/home/general-settings");
-        if (res && res.status) {
-          setSettings(res.data);
-        }
+        await homeServices.getHomeSettings(dispatch);
       } catch (error) {
         toast.error(error.message, ToastObjects);
       }

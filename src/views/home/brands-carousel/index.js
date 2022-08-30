@@ -58,14 +58,8 @@ function BrandSlider() {
   return (
     <div style={{ background: "#fff" }}>
       <div className="container" id="header-category-bk">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="main-title-tt">
-              <div className="main-title-left">
-                <h2>All Brands</h2>
-              </div>
-            </div>
-          </div>
+        <div className="section-header">
+          <h5 className="heading-design-h5">All Brands</h5>
         </div>
         <Slider {...settings}>
           {brands &&

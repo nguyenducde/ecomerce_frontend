@@ -23,14 +23,8 @@ function CategorySlider() {
   return (
     <div style={{ background: "#fff" }}>
       <div className="container" id="header-category-bk">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="main-title-tt">
-              <div className="main-title-left">
-                <h2>Top Categories</h2>
-              </div>
-            </div>
-          </div>
+        <div className="section-header">
+          <h5 className="heading-design-h5">Top Categories</h5>
         </div>
         <div class="row ">
           {categories &&

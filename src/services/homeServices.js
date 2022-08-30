@@ -1,7 +1,9 @@
 import {
   getHomeBrands,
   getHomeCategories,
+  getHomeSettings,
   getHomeSliders,
+  getHomeTopProducts,
 } from "../store/actions/homeActions";
 import http from "./api";
 
@@ -30,6 +32,26 @@ const homeServices = {
     try {
       let res = await http.get("/api/v1/home/brands");
       dispatch(getHomeBrands(res.data));
+      return Promise.resolve(res);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  getHomeTopProducts: async (dispatch) => {
+    try {
+      let res = await http.get("/api/v1/home/top-products");
+      dispatch(getHomeTopProducts(res.data));
+      return Promise.resolve(res);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
+
+  getHomeSettings: async (dispatch) => {
+    try {
+      let res = await http.get("/api/v1/home/general-settings");
+      dispatch(getHomeSettings(res.data));
       return Promise.resolve(res);
     } catch (error) {
       return Promise.reject(error);
