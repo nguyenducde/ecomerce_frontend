@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BannerSlider from "../home/banner-carousel";
-import CategorySlider from "../home/category-carousel";
+import Categories from "../home/categories";
+import Brands from "./brands-carousel";
 // import Bestofferbanner from "./best-offers-banner";
 // import Topstample from "./top-stample";
 
@@ -9,7 +10,8 @@ export default class Home extends Component {
     return (
       <div className="wrapper">
         <BannerSlider />
-        <CategorySlider />
+        <Categories />
+        <Brands />
 
         {/* <Bestofferbanner />
         <Topstample /> */}
