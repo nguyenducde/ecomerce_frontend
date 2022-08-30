@@ -1,11 +1,13 @@
 import {
   GET_HOME_SLIDERS,
   GET_HOME_CATEGORIES,
+  GET_HOME_BRANDS,
 } from "../constants/homeConstants";
 
 const initalState = {
   sliders: [],
   categories: [],
+  brands: [],
 };
 export default function homeReducers(state = initalState, action) {
   switch (action.type) {
@@ -19,6 +21,12 @@ export default function homeReducers(state = initalState, action) {
       return {
         ...state,
         categories: action.payload,
+      };
+    }
+    case GET_HOME_BRANDS: {
+      return {
+        ...state,
+        brands: action.payload,
       };
     }
     default: {

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { ToastObjects } from "../../../utils/toast/toastObject";
 import homeServices from "../../../services/homeServices";
 import { UPLOAD_URL } from "../../../config";
+import { Link } from "react-router-dom";
 function CategorySlider() {
   const dispatch = useDispatch();
   let categories = useSelector((state) => state.home.categories);
@@ -42,7 +43,7 @@ function CategorySlider() {
                       <img src={UPLOAD_URL + category.image} alt="Laptop" />
                     </a>
                     <h5>
-                      <a href="#">{category.name}</a>
+                      <Link to="#">{category.name}</Link>
                     </h5>
                   </div>
                 </div>

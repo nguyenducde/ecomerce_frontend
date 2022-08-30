@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Toast from "./utils/toast/toast";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/header";
+import Footer from "./components/footer";
 import Home from "./views/home";
 const loading = (
   <div className="pt-3 text-center">
@@ -35,6 +36,7 @@ function App() {
           </Routes>
         </Suspense>
       </BrowserRouter>
+      <Footer />
     </>
   );
 }

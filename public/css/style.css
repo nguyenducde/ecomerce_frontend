@@ -757,6 +757,10 @@ a:focus {
     border-bottom: 1px solid #eeeeee;
     border-top: 1px solid #eeeeee !important;
 }
+.footer .footer-list li a{
+    color:hsl(0deg 0% 53%);
+    font-size: 12px;
+}
 .app img {
     height: 32px;
     margin: 0 11px 0 0;
