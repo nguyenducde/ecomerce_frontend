@@ -1,55 +1,56 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-import {ToastObjects} from '../../utils/toast/toastObject'
+import { ToastObjects } from "../../utils/toast/toastObject";
 import { emailIsValid } from "../../utils/helper";
 import authServices from "../../services/authService";
-import {useDispatch} from 'react-redux'
+import { useDispatch } from "react-redux";
+import Register from "./register";
 
 function Login() {
-    const dispatch = useDispatch();
-    const [state,setState]=useState({
-        email:'',
-        password:''
-    })
-    const [submitting,setSubmitting]=useState(false);
-    
-    const handleChange=(e)=>{
-        setState({...state,[e.target.name]:e.target.value})
+  const dispatch = useDispatch();
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+  });
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = state;
+    if (!email) {
+      toast.error("Email address is required.", ToastObjects);
+      return;
     }
-    
-    const handleSubmit=async(e)=>{
-        e.preventDefault();
-        const {email,password}=state;
-        if(!email){
-            toast.error("Email address is required.",ToastObjects);
-            return;
-        }
-        if(!password){
-            toast.error("Password is required.",ToastObjects);
-            return;
-        }
-        if(!emailIsValid(email)){
-            toast.error("Email address is invalid.",ToastObjects);
-        }
-        if (password && password.length < 6) {
-            toast.error('Password must have at least 6 characters.', ToastObjects)
-            return
-          }
-          
-          try{
-            let res=await authServices.loginUser({...state,panel:"user"},dispatch)
-            if(res && res.status){
-                window.location.href="/"
-                toast.success("User successfully logged in", ToastObjects)
-                
-            }
-          }
-          catch(error){
-            toast.error(error.message || "Something went wrong", ToastObjects)
-          }
-      
+    if (!password) {
+      toast.error("Password is required.", ToastObjects);
+      return;
     }
-    
+    if (!emailIsValid(email)) {
+      toast.error("Email address is invalid.", ToastObjects);
+    }
+    if (password && password.length < 6) {
+      toast.error("Password must have at least 6 characters.", ToastObjects);
+      return;
+    }
+
+    try {
+      let res = await authServices.loginUser(
+        { ...state, panel: "user" },
+        dispatch
+      );
+      if (res && res.status) {
+        window.location.href = "/";
+        toast.success("User successfully logged in", ToastObjects);
+      }
+    } catch (error) {
+      toast.error(error.message || "Something went wrong", ToastObjects);
+    }
+  };
+
   return (
     <div>
       <div className="modal fade login-modal-main" id="bd-example-modal">
@@ -70,18 +71,18 @@ function Login() {
                       </span>
                       <span className="sr-only">Close</span>
                     </button>
-                    <form noValidate onSubmit={handleSubmit}>
-                      <div className="login-modal-right">
-                        {/* Tab panes */}
-                        <div className="tab-content">
-                          <div
-                            className="tab-pane active"
-                            id="login"
-                            role="tabpanel"
-                          >
-                            <h5 className="heading-design-h5">
-                              Login to your account
-                            </h5>
+                    <div className="login-modal-right">
+                      {/* Tab panes */}
+                      <div className="tab-content">
+                        <div
+                          className="tab-pane active"
+                          id="login"
+                          role="tabpanel"
+                        >
+                          <h5 className="heading-design-h5">
+                            Login to your account
+                          </h5>
+                          <form noValidate onSubmit={handleSubmit}>
                             <fieldset className="form-group">
                               <label>Enter Email Address</label>
                               <input
@@ -113,43 +114,39 @@ function Login() {
                                 Login to your account
                               </button>
                             </fieldset>
-                          </div>
-                          <div
-                            className="tab-pane"
-                            id="register"
-                            role="tabpanel"
-                          >
-                            {/* <Register /> */}
-                          </div>
+                          </form>
                         </div>
-                        <div className="clearfix" />
-                        <div className="text-center login-footer-tab">
-                          <ul className="nav nav-tabs" role="tablist">
-                            <li className="nav-item">
-                              <a
-                                className="nav-link active"
-                                data-toggle="tab"
-                                href="#login"
-                                role="tab"
-                              >
-                                <i className="mdi mdi-lock" /> LOGIN
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                className="nav-link"
-                                data-toggle="tab"
-                                href="#register"
-                                role="tab"
-                              >
-                                <i className="mdi mdi-pencil" /> REGISTER
-                              </a>
-                            </li>
-                          </ul>
+                        <div className="tab-pane" id="register" role="tabpanel">
+                          <Register />
                         </div>
-                        <div className="clearfix" />
                       </div>
-                    </form>
+                      <div className="clearfix" />
+                      <div className="text-center login-footer-tab">
+                        <ul className="nav nav-tabs" role="tablist">
+                          <li className="nav-item">
+                            <a
+                              className="nav-link active"
+                              data-toggle="tab"
+                              href="#login"
+                              role="tab"
+                            >
+                              <i className="mdi mdi-lock" /> LOGIN
+                            </a>
+                          </li>
+                          <li className="nav-item">
+                            <a
+                              className="nav-link"
+                              data-toggle="tab"
+                              href="#register"
+                              role="tab"
+                            >
+                              <i className="mdi mdi-pencil" /> REGISTER
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="clearfix" />
+                    </div>
                   </div>
                 </div>
               </div>

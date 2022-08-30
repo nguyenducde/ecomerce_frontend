@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CartSideBar from "../../views/cart-sidebar";
 import Login from "../../views/auth/login";
+import { toast } from "react-toastify";
+import { ToastObjects } from "../../utils/toast/toastObject";
+import { useDispatch, useSelector } from "react-redux";
+import authServices from "../../services/authService";
 const Navigation = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.profile);
+  // useEffect(() => {
+  //   authServices.userProfile(dispatch);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   const checkAuth = () => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       return true;
     }
     return false;
+  };
+
+  // logout handler
+  const handleLogout = async () => {
+    try {
+      localStorage.removeItem("accessToken");
+      window.location.reload();
+    } catch (e) {
+      toast.error("Something went wrong.", ToastObjects);
+    }
   };
   return (
     <div>
@@ -115,7 +135,7 @@ const Navigation = () => {
                             <div class="dropdown-divider"></div>
                             <span
                               className="dropdown-item"
-                              // onClick={this.handleLogout}
+                              onClick={handleLogout}
                             >
                               <i
                                 className="mdi mdi-lock"
