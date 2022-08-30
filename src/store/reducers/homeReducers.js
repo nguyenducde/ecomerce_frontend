@@ -8,7 +8,7 @@ export default function homeReducers(state = initalState, action) {
     case GET_HOME_SLIDERS: {
       return {
         ...state,
-        sliders: action.sliders,
+        sliders: action.payload,
       };
     }
     default: {
