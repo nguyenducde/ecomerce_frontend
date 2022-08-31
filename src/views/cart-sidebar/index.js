@@ -1,16 +1,17 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 function CartSideBar() {
+  const { cartItems } = useSelector((state) => state.cart);
   return (
     <div>
       <span data-toggle="offcanvas" className="btn btn-link border-none">
         <i className="mdi mdi-cart" /> My Cart{" "}
-        <small className="cart-value">12</small>
+        <small className="cart-value">{cartItems.length}</small>
       </span>
       <div className="cart-sidebar">
         <div className="bs-canvas-header side-cart-header p-3 ">
           <div className="d-inline-block  main-cart-title">
-            My Cart <span>(12 Items)</span>
+            My Cart <span>({cartItems.length} Items)</span>
           </div>
           <button
             type="button"
@@ -21,56 +22,58 @@ function CartSideBar() {
           </button>
         </div>
         <div className="cart-sidebar-body">
-          <div className="cart-item">
-            <div className="cart-product-img">
-              <img className="img-fluid" src="" alt="cart" />
-              <div className="offer-badge">4% OFF</div>
-            </div>
-            <div className="cart-text">
-              <h4>Test APP</h4>
-              <div className="cart-radio">
-                <ul className="kggrm-now">
-                  <li>
-                    <input type="radio" id="a1" name="cart1" />
-                    <label>2</label>
-                  </li>
-                </ul>
+          {cartItems.map((row, index) => (
+            <div className="cart-item" key={index}>
+              <div className="cart-product-img">
+                <img className="img-fluid" src={row.photo} alt="cart" />
+                <div className="offer-badge">{row.discountPer}% OFF</div>
               </div>
-              <div className="qty-group">
-                <div className="quantity buttons_added">
-                  <input
-                    type="button"
-                    defaultValue="-"
-                    className="minus minus-btn"
-                    // onClick={() => this.props.decreaseToCart(row)}
-                  />
-                  <input
-                    type="number"
-                    value="3"
-                    className="input-text qty text"
-                    disabled
-                  />
-                  <input
-                    type="button"
-                    defaultValue="+"
-                    className="plus plus-btn"
-                    // onClick={() => this.props.incrementToCart(row)}
-                  />
-                  <button
-                    type="button"
-                    className="cart-close-btn"
-                    // onClick={() => this.props.removeFromCart(row)}
-                  >
-                    <i className="mdi mdi-close" />
-                  </button>
+              <div className="cart-text">
+                <h4>{row.name}</h4>
+                <div className="cart-radio">
+                  <ul className="kggrm-now">
+                    <li>
+                      <input type="radio" id="a1" name="cart1" />
+                      <label>{row.unitSize}</label>
+                    </li>
+                  </ul>
                 </div>
-                <div className="cart-item-price">
-                  &#x20B9;100
-                  <span>&#x20B9;200</span>
+                <div className="qty-group">
+                  <div className="quantity buttons_added">
+                    <input
+                      type="button"
+                      defaultValue="-"
+                      className="minus minus-btn"
+                      onClick={() => this.props.decreaseToCart(row)}
+                    />
+                    <input
+                      type="number"
+                      value={row.qty}
+                      className="input-text qty text"
+                      disabled
+                    />
+                    <input
+                      type="button"
+                      defaultValue="+"
+                      className="plus plus-btn"
+                      onClick={() => this.props.incrementToCart(row)}
+                    />
+                    <button
+                      type="button"
+                      className="cart-close-btn"
+                      onClick={() => this.props.removeFromCart(row)}
+                    >
+                      <i className="mdi mdi-close" />
+                    </button>
+                  </div>
+                  <div className="cart-item-price">
+                    &#x20B9;{row.qty * row.netPrice}
+                    <span>&#x20B9;{row.netPrice}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
         <div className="cart-sidebar-footer">
           <div className="cart-store-details">
@@ -78,7 +81,7 @@ function CartSideBar() {
               Sub Total{" "}
               <strong className="float-right">
                 &#x20B9;
-                {/* {cartItems.reduce((sum, i) => (sum += i.qty * i.netPrice), 0)} */}
+                {cartItems.reduce((sum, i) => (sum += i.qty * i.netPrice), 0)}
               </strong>
             </p>
             <p>
@@ -105,7 +108,7 @@ function CartSideBar() {
               <span className="float-right">
                 <strong>
                   &#x20B9;
-                  {/* {cartItems.reduce((sum, i) => (sum += i.qty * i.netPrice), 0)} */}
+                  {cartItems.reduce((sum, i) => (sum += i.qty * i.netPrice), 0)}
                 </strong>{" "}
                 <span className="mdi mdi-chevron-right" />
               </span>

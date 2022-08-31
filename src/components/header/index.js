@@ -5,13 +5,19 @@ import { toast } from "react-toastify";
 import { ToastObjects } from "../../utils/toast/toastObject";
 import { useDispatch, useSelector } from "react-redux";
 import authServices from "../../services/authService";
+import homeServices from "../../services/homeServices";
 const Navigation = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.profile);
-  // useEffect(() => {
-  //   authServices.userProfile(dispatch);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const profile = useSelector((state) => state.user.profile);
+  useEffect(() => {
+    if (!profile || Object.keys(profile).length < 1) {
+      try {
+        authServices.userProfile(dispatch);
+      } catch (e) {
+        toast.error(e, ToastObjects);
+      }
+    }
+  }, [dispatch]);
   const checkAuth = () => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
@@ -91,7 +97,7 @@ const Navigation = () => {
                             aria-expanded="false"
                           >
                             <i className="mdi mdi-account-circle px-2" />
-                            Prajwal
+                            {profile.name}
                           </button>
 
                           <div
@@ -132,7 +138,7 @@ const Navigation = () => {
                               ></i>{" "}
                               Orders List
                             </a>
-                            <div class="dropdown-divider"></div>
+                            <div className="dropdown-divider"></div>
                             <span
                               className="dropdown-item"
                               onClick={handleLogout}

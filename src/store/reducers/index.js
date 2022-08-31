@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import userAuthReducer from "./authReducers";
 import homeReducers from "./homeReducers";
+import cartReducers from "./cartReducers";
 
 const appReducer = combineReducers({
   user: userAuthReducer,
   home: homeReducers,
+  cart: cartReducers,
 });
 
 const rootReducer = (state, action) => {

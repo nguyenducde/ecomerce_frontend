@@ -10,7 +10,9 @@ function Footer() {
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.home.settings);
   let categories = useSelector((state) => state.home.categories);
-  categories = categories.slice(0, 6);
+  if (categories.length > 0) {
+    categories = categories.slice(0, 6);
+  }
   useEffect(() => {
     const getSettings = async () => {
       try {
@@ -82,7 +84,7 @@ function Footer() {
             </div>
             <div className="col-lg-2 col-md-2">
               <h6 className="mb-4">INFORMATION </h6>
-              <ul class="footer-list">
+              <ul className="footer-list">
                 <li>
                   <a href="#"> Your Account</a>
                 </li>
@@ -103,11 +105,11 @@ function Footer() {
             </div>
             <div className="col-lg-2 col-md-2">
               <h6 className="mb-4">CATEGORIES</h6>
-              <ul class="footer-list">
+              <ul className="footer-list">
                 {categories &&
                   categories.length > 0 &&
-                  categories.map((category) => (
-                    <li>
+                  categories.map((category, index) => (
+                    <li key={index}>
                       <a href="#">{category.name}</a>
                     </li>
                   ))}
@@ -115,7 +117,7 @@ function Footer() {
             </div>
             <div className="col-lg-2 col-md-2">
               <h6 className="mb-4">CUSTOMER CARE</h6>
-              <ul class="footer-list">
+              <ul className="footer-list">
                 <li>
                   <a href="#">Payment Method</a>
                 </li>
@@ -138,10 +140,10 @@ function Footer() {
               <h6 className="mb-4">Download App</h6>
               <div className="app">
                 <a href="#">
-                  <img src="img/google.png" alt />
+                  <img src="img/google.png" alt="" />
                 </a>
                 <a href="#">
-                  <img src="img/apple.png" alt />
+                  <img src="img/apple.png" alt="" />
                 </a>
               </div>
               <h6 className="mb-3 mt-4">GET IN TOUCH</h6>

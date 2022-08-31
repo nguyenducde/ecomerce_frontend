@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 function CategorySlider() {
   const dispatch = useDispatch();
   let categories = useSelector((state) => state.home.categories);
-  categories = categories.slice(0, 4);
+  if (categories.length > 0) {
+    categories = categories.slice(0, 4);
+  }
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -26,22 +28,20 @@ function CategorySlider() {
         <div className="section-header">
           <h5 className="heading-design-h5">Top Categories</h5>
         </div>
-        <div class="row ">
+        <div className="row ">
           {categories &&
             categories.length > 0 &&
-            categories.map((category) => (
-              <>
-                <div class="col-12 col-md-3 ">
-                  <div class="single_catagory mt-50">
-                    <a href="javascript:;" class="best-offer-item">
-                      <img src={UPLOAD_URL + category.image} alt="Laptop" />
-                    </a>
-                    <h5>
-                      <Link to="#">{category.name}</Link>
-                    </h5>
-                  </div>
+            categories.map((category, index) => (
+              <div className="col-12 col-md-3 " key={index}>
+                <div className="single_catagory mt-50">
+                  <Link to="" className="best-offer-item">
+                    <img src={UPLOAD_URL + category.image} alt="Laptop" />
+                  </Link>
+                  <h5>
+                    <Link to="#">{category.name}</Link>
+                  </h5>
                 </div>
-              </>
+              </div>
             ))}
         </div>
       </div>

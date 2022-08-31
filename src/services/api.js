@@ -7,7 +7,7 @@ const http = axios.create({
 http.defaults.headers.post["Content-Type"] = "application/json";
 
 http.interceptors.request.use(function (config) {
-  const accessToken = localStorage.getItem("access_token");
+  const accessToken = localStorage.getItem("accessToken");
   config.headers.Authorization = `Bearer ${accessToken}`;
   return config;
 });
@@ -37,7 +37,7 @@ http.interceptors.response.use(
     if (response) {
       if (response.status === 401) {
         localStorage.removeItem("access_token");
-        window.location.href = "/login";
+        // window.location.href = "/login";
       }
 
       if (response.status >= 400 && response.status < 500) {

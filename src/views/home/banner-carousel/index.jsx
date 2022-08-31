@@ -32,20 +32,18 @@ function BannerSlider() {
       }
     };
     getSliders();
-  }, []);
+  }, [dispatch]);
   return (
     <div>
       <Slider {...settings}>
         {sliders &&
           sliders.length > 0 &&
-          sliders.map((slider) => (
-            <>
-              <div className="owl-item">
+          sliders.map((slider,index) => (
+              <div className="owl-item" key={index}>
                 <a href={slider.link}>
-                  <img src={UPLOAD_URL + slider.image} alt="supermarket" />
+                  <img src={UPLOAD_URL + slider.image} alt="" />
                 </a>
               </div>
-            </>
           ))}
       </Slider>
     </div>

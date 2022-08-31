@@ -64,25 +64,23 @@ function BrandSlider() {
         <Slider {...settings}>
           {brands &&
             brands.length > 0 &&
-            brands.map((brand) => (
-              <>
-                <div className="item">
-                  <div className="category-item">
-                    <Link
-                      to={{
-                        pathname: ``,
-                      }}
-                    >
-                      <img
-                        className="img-fluid"
-                        src={UPLOAD_URL + brand.logo}
-                        alt={brand.name}
-                      />
-                      <h6>{brand.name}</h6>
-                    </Link>
-                  </div>
+            brands.map((brand, index) => (
+              <div className="item" key={index}>
+                <div className="category-item">
+                  <Link
+                    to={{
+                      pathname: ``,
+                    }}
+                  >
+                    <img
+                      className="img-fluid"
+                      src={UPLOAD_URL + brand.logo}
+                      alt={brand.name}
+                    />
+                    <h6>{brand.name}</h6>
+                  </Link>
                 </div>
-              </>
+              </div>
             ))}
         </Slider>
       </div>

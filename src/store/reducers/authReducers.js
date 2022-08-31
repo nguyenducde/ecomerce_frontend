@@ -1,10 +1,7 @@
 import { USER_LOGIN, USER_REGISTER, GET_USER } from "../constants/authContants";
 
 const initialState = {
-  profile: {
-    name: "",
-    email: "",
-  },
+  profile: {},
 };
 export default function userAuthReducer(state = initialState, action) {
   switch (action.type) {
