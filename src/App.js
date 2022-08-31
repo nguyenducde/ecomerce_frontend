@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Home from "./views/home";
+import Checkout from "./views/checkout";
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -22,21 +23,29 @@ function App() {
   return (
     <>
       <Toast />
-      <Header />
 
       <BrowserRouter>
+        <Header />
+
         <Suspense fallback={loading}>
           <Routes>
             <Route
+              exact
               path="/login"
               name="login page"
               element={checkAuth() ? <Navigate to={{ pathname: "/" }} /> : ""}
             />
-            <Route path="/" name="home page" element={<Home />} />
+            <Route exact path="/" name="home page" element={<Home />} />
+            <Route
+              exact
+              path="/checkout"
+              name="checkout page"
+              element={<Checkout />}
+            />
           </Routes>
         </Suspense>
+        <Footer />
       </BrowserRouter>
-      <Footer />
     </>
   );
 }

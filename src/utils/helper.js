@@ -42,3 +42,8 @@ export const toTitleCase = (str) => {
       .join(" ");
   return str;
 };
+
+export const priceFormat = (currency, amount) => {
+  let price = currency + amount.toLocaleString("en-US");
+  return price;
+};

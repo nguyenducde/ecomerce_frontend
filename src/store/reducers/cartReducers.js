@@ -25,6 +25,10 @@ export default function cartReducer(
         cartItems: action.payload.cartItems,
       };
 
+    case REMOVE_FROM_CART:
+      return {
+        cartItems: action.payload.cartItems,
+      };
     default:
       return state;
   }

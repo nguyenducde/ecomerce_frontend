@@ -1,7 +1,32 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { UPLOAD_URL } from "../../config";
+import { priceFormat } from "../../utils/helper";
+import { Link } from "react-router-dom";
+import {
+  incrementCart,
+  decrementCart,
+  removeFromCart,
+} from "../../store/actions/cartActions";
 function CartSideBar() {
+  const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
+  const currency = useSelector((state) => state.home.settings).symbol;
+  const subTotal = cartItems.reduce(
+    (sum, i) => (sum += i.quantity * i.priceAfterDiscount),
+    0
+  );
+  const incrementToCart = (id) => {
+    dispatch(incrementCart(id));
+  };
+
+  const decrementToCart = (id) => {
+    dispatch(decrementCart(id));
+  };
+
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
   return (
     <div>
       <span data-toggle="offcanvas" className="btn btn-link border-none">
@@ -22,33 +47,31 @@ function CartSideBar() {
           </button>
         </div>
         <div className="cart-sidebar-body">
-          {cartItems.map((row, index) => (
+          {cartItems.map((item, index) => (
             <div className="cart-item" key={index}>
               <div className="cart-product-img">
-                <img className="img-fluid" src={row.photo} alt="cart" />
-                <div className="offer-badge">{row.discountPer}% OFF</div>
+                <img
+                  className="img-fluid"
+                  src={UPLOAD_URL + item.image}
+                  alt="cart"
+                />
+                {item.discount > 0 && (
+                  <div className="offer-badge">{item.discount}% OFF</div>
+                )}
               </div>
               <div className="cart-text">
-                <h4>{row.name}</h4>
-                <div className="cart-radio">
-                  <ul className="kggrm-now">
-                    <li>
-                      <input type="radio" id="a1" name="cart1" />
-                      <label>{row.unitSize}</label>
-                    </li>
-                  </ul>
-                </div>
-                <div className="qty-group">
+                <h4>{item.name}</h4>
+                <div className="qty-group mt-5">
                   <div className="quantity buttons_added">
                     <input
                       type="button"
                       defaultValue="-"
                       className="minus minus-btn"
-                      onClick={() => this.props.decreaseToCart(row)}
+                      onClick={() => decrementToCart(item.id)}
                     />
                     <input
                       type="number"
-                      value={row.qty}
+                      value={item.quantity}
                       className="input-text qty text"
                       disabled
                     />
@@ -56,19 +79,24 @@ function CartSideBar() {
                       type="button"
                       defaultValue="+"
                       className="plus plus-btn"
-                      onClick={() => this.props.incrementToCart(row)}
+                      onClick={() => incrementToCart(item.id)}
                     />
                     <button
                       type="button"
                       className="cart-close-btn"
-                      onClick={() => this.props.removeFromCart(row)}
+                      onClick={() => removeFromCartHandler(item.id)}
                     >
                       <i className="mdi mdi-close" />
                     </button>
                   </div>
                   <div className="cart-item-price">
-                    &#x20B9;{row.qty * row.netPrice}
-                    <span>&#x20B9;{row.netPrice}</span>
+                    {priceFormat(
+                      currency,
+                      item.quantity * item.priceAfterDiscount
+                    )}
+                    <span>
+                      {priceFormat(currency, item.quantity * item.price)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -80,24 +108,23 @@ function CartSideBar() {
             <p>
               Sub Total{" "}
               <strong className="float-right">
-                &#x20B9;
-                {cartItems.reduce((sum, i) => (sum += i.qty * i.netPrice), 0)}
+                {priceFormat(currency, subTotal)}
               </strong>
             </p>
             <p>
               Delivery Charges{" "}
               <strong className="float-right text-danger">
-                + &#x20B9;29.69
+                + {priceFormat(currency, 0)}
               </strong>
             </p>
             <h6>
               Your total savings{" "}
               <strong className="float-right text-danger">
-                &#x20B9;55 (42.31%)
+                {priceFormat(currency, subTotal)}
               </strong>
             </h6>
           </div>
-          <a href="/checkout">
+          <Link to={{ pathname: "/checkout" }}>
             <button
               className="btn btn-secondary btn-lg btn-block text-left"
               type="button"
@@ -106,14 +133,11 @@ function CartSideBar() {
                 <i className="mdi mdi-cart-outline" /> Proceed to Checkout{" "}
               </span>
               <span className="float-right">
-                <strong>
-                  &#x20B9;
-                  {cartItems.reduce((sum, i) => (sum += i.qty * i.netPrice), 0)}
-                </strong>{" "}
+                <strong>{priceFormat(currency, subTotal)}</strong>{" "}
                 <span className="mdi mdi-chevron-right" />
               </span>
             </button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

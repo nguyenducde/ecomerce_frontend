@@ -34,3 +34,46 @@ export const addToCart = (id, quantity) => async (dispatch, getState) => {
   });
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };
+
+export const incrementCart = (id) => (dispatch, getState) => {
+  const cartItems = getState().cart.cartItems.slice();
+  const selectProduct = cartItems.find((item) => item.id === id);
+  const index = cartItems.indexOf(selectProduct);
+  const value = cartItems[index];
+  value.quantity = value.quantity + 1;
+
+  dispatch({
+    type: INCREASE_QUANTITY,
+    payload: { cartItems },
+  });
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+};
+
+export const decrementCart = (id) => (dispatch, getState) => {
+  const cartItems = getState().cart.cartItems.slice();
+  const selectProduct = cartItems.find((item) => item.id === id);
+  const index = cartItems.indexOf(selectProduct);
+  const value = cartItems[index];
+  if (value.quantity > 1) {
+    value.quantity = value.quantity - 1;
+  }
+
+  dispatch({
+    type: DECREASE_QUANTITY,
+    payload: { cartItems },
+  });
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+};
+
+export const removeFromCart = (id) => (dispatch, getState) => {
+  const cartItems = getState()
+    .cart.cartItems.slice()
+    .filter((item) => item.id !== id);
+
+  dispatch({
+    type: REMOVE_FROM_CART,
+    payload: { cartItems },
+  });
+
+  localStorage.removeItem("cartItems", JSON.stringify(cartItems));
+};
