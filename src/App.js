@@ -6,6 +6,7 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import Home from "./views/home";
 import Checkout from "./views/checkout";
+import ConfirmOrder from "./views/checkout/complete";
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -13,7 +14,7 @@ const loading = (
 );
 // Check the auth
 function checkAuth() {
-  const accessToken = localStorage.getItem("access_token");
+  const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
     return true;
   }
@@ -29,18 +30,20 @@ function App() {
 
         <Suspense fallback={loading}>
           <Routes>
-            <Route
-              exact
-              path="/login"
-              name="login page"
-              element={checkAuth() ? <Navigate to={{ pathname: "/" }} /> : ""}
-            />
             <Route exact path="/" name="home page" element={<Home />} />
             <Route
               exact
               path="/checkout"
               name="checkout page"
               element={<Checkout />}
+            />
+
+            {/* Order success */}
+            <Route
+              exact
+              path="/order/success"
+              name="Order success"
+              element={<ConfirmOrder />}
             />
           </Routes>
         </Suspense>

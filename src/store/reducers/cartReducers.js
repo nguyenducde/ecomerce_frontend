@@ -3,6 +3,7 @@ import {
   REMOVE_FROM_CART,
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
+  CART_RESET,
 } from "../constants/cartConstants";
 
 export default function cartReducer(
@@ -26,6 +27,11 @@ export default function cartReducer(
       };
 
     case REMOVE_FROM_CART:
+      return {
+        cartItems: action.payload.cartItems,
+      };
+
+    case CART_RESET:
       return {
         cartItems: action.payload.cartItems,
       };

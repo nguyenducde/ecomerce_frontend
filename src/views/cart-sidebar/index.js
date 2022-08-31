@@ -27,6 +27,15 @@ function CartSideBar() {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
+
+  // Check the auth
+  function checkAuth() {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      return true;
+    }
+    return false;
+  }
   return (
     <div>
       <span data-toggle="offcanvas" className="btn btn-link border-none">
@@ -124,20 +133,42 @@ function CartSideBar() {
               </strong>
             </h6>
           </div>
-          <Link to={{ pathname: "/checkout" }}>
-            <button
-              className="btn btn-secondary btn-lg btn-block text-left"
-              type="button"
-            >
-              <span className="float-left">
-                <i className="mdi mdi-cart-outline" /> Proceed to Checkout{" "}
-              </span>
-              <span className="float-right">
-                <strong>{priceFormat(currency, subTotal)}</strong>{" "}
-                <span className="mdi mdi-chevron-right" />
-              </span>
-            </button>
-          </Link>
+          {checkAuth() ? (
+            <>
+              <Link to={{ pathname: "/checkout" }}>
+                <button
+                  data-toggle="offcanvas"
+                  className="btn btn-secondary btn-lg btn-block text-left"
+                  type="button"
+                >
+                  <span className="float-left">
+                    <i className="mdi mdi-cart-outline" /> Proceed to Checkout{" "}
+                  </span>
+                  <span className="float-right">
+                    <strong>{priceFormat(currency, subTotal)}</strong>{" "}
+                    <span className="mdi mdi-chevron-right" />
+                  </span>
+                </button>
+              </Link>{" "}
+            </>
+          ) : (
+            <>
+              <button
+                data-target="#bd-example-modal"
+                data-toggle="modal"
+                className="btn btn-secondary btn-lg btn-block text-left"
+                type="button"
+              >
+                <span className="float-left">
+                  <i className="mdi mdi-cart-outline" /> Proceed to Checkout{" "}
+                </span>
+                <span className="float-right">
+                  <strong>{priceFormat(currency, subTotal)}</strong>{" "}
+                  <span className="mdi mdi-chevron-right" />
+                </span>
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

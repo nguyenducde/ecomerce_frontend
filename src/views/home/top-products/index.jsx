@@ -12,9 +12,7 @@ function TopProducts() {
   const dispatch = useDispatch();
   const currency = useSelector((state) => state.home.settings).symbol;
   let products = useSelector((state) => state.home.topProducts);
-  if (products.length > 0) {
-    products = products.slice(0, 4);
-  }
+
   useEffect(() => {
     const getCategories = async () => {
       try {

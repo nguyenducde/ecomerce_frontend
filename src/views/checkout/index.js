@@ -6,7 +6,11 @@ import { UPLOAD_URL } from "../../config";
 import { toast } from "react-toastify";
 import { ToastObjects } from "../../utils/toast/toastObject";
 import http from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import { cartReset } from "../../store/actions/cartActions";
 function Checkout() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const customer = useSelector((state) => state.user.profile);
   const { cartItems } = useSelector((state) => state.cart);
   const currency = useSelector((state) => state.home.settings).symbol;
@@ -48,7 +52,8 @@ function Checkout() {
     try {
       let res = await http.post("/api/v1/user/order/place", data);
       if (res && res.status) {
-        toast.success(res.message, ToastObjects);
+        dispatch(cartReset());
+        navigate("/order/success", { replace: true });
       }
     } catch (e) {
       toast.error("Something went wrong. Please try again.", ToastObjects);
@@ -166,20 +171,21 @@ function Checkout() {
                                       </label>
                                     </div>
                                   </li>
-                                  {/* <li>
-                                    <div
-                                      className="radio-item_1"
-                                        onClick={this.handlePaymentSystem}
-                                    >
-                                      <input value="card" name="paymentmethod" type="button" onClick={this.handleRadioChange} />
+                                  <li>
+                                    <div className="radio-item_1">
+                                      <input
+                                        value="card"
+                                        name="paymentMethod"
+                                        type="radio"
+                                      />
                                       <label
                                         htmlFor="card1"
                                         className="radio-label_1"
                                       >
-                                        Pay With Card
+                                        e-Sewa
                                       </label>
                                     </div>
-                                  </li> */}
+                                  </li>
                                 </ul>
                               </div>
                               <button
@@ -213,9 +219,11 @@ function Checkout() {
                         src={UPLOAD_URL + item.image}
                         alt="cart"
                       />
-                      <span className="badge badge-success">
-                        {item.discount}% OFF
-                      </span>
+                      {item.discount > 0 && (
+                        <span className="badge badge-success">
+                          {item.discount}% OFF
+                        </span>
+                      )}
                       <h5>{item.name}</h5>
                       <h6>
                         <strong>

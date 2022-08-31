@@ -4,6 +4,7 @@ import {
   REMOVE_FROM_CART,
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
+  CART_RESET,
 } from "../constants/cartConstants";
 
 export const addToCart = (id, quantity) => async (dispatch, getState) => {
@@ -76,4 +77,17 @@ export const removeFromCart = (id) => (dispatch, getState) => {
   });
 
   localStorage.removeItem("cartItems", JSON.stringify(cartItems));
+};
+
+export const cartReset = () => (dispatch) => {
+  let cartItems = localStorage.getItem("cartItems");
+  if (cartItems) {
+    localStorage.removeItem("cartItems");
+  }
+
+  cartItems = [];
+  dispatch({
+    type: CART_RESET,
+    payload: { cartItems },
+  });
 };
