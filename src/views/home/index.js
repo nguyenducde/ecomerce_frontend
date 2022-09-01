@@ -14,8 +14,6 @@ export default class Home extends Component {
         <Categories />
         <Brands />
         <TopProduct />
-        {/* <Bestofferbanner />
-        <Topstample /> */}
       </div>
     );
   }

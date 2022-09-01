@@ -34,11 +34,24 @@ function CategorySlider() {
             categories.map((category, index) => (
               <div className="col-12 col-md-3 " key={index}>
                 <div className="single_catagory mt-50">
-                  <Link to="" className="best-offer-item">
+                  <Link
+                    to={{
+                      pathname: `/category/${category.slug}/${category._id}`,
+                      state: category,
+                    }}
+                    className="best-offer-item"
+                  >
                     <img src={UPLOAD_URL + category.image} alt="Laptop" />
                   </Link>
                   <h5>
-                    <Link to="#">{category.name}</Link>
+                    <Link
+                      to={{
+                        pathname: `/category/${category.slug}/${category._id}`,
+                        state: category,
+                      }}
+                    >
+                      {category.name}
+                    </Link>
                   </h5>
                 </div>
               </div>

@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
-import { useMatch } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import http from "../../services/api";
 import { toast } from "react-toastify";
 import { ToastObjects } from "../../utils/toast/toastObject";
 import { priceFormat } from "../../utils/helper";
 import { UPLOAD_URL } from "../../config";
 import "./index.css";
+import parse from "html-react-parser";
+import { addToCart } from "../../store/actions/cartActions";
 function SingleProduct() {
   const dispatch = useDispatch();
   const match = useMatch("/product/:slug/:id");
   const [productId, setProductId] = useState("");
   const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
   const currency = useSelector((state) => state.home.settings).symbol;
   useEffect(() => {
     if (match) {
@@ -31,6 +34,21 @@ function SingleProduct() {
 
     getProductById();
   }, [productId]);
+
+  const incrementToCart = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decrementToCart = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const addToCartHandler = () => {
+    dispatch(addToCart(match.params.id, quantity));
+  };
+
   const settings = {
     customPaging: function (i) {
       return (
@@ -54,14 +72,17 @@ function SingleProduct() {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <a href="#">
+              <Link to="/">
                 <strong>
                   <span className="mdi mdi-home" /> Home
                 </strong>
+              </Link>{" "}
+              <span className="mdi mdi-chevron-right" />{" "}
+              <a href="#">
+                {product && product.category && product.category.name}
               </a>{" "}
               <span className="mdi mdi-chevron-right" />{" "}
-              <a href="#">Fruits &amp; Vegetables</a>{" "}
-              <span className="mdi mdi-chevron-right" /> <a href="#">Fruits</a>
+              <a href="#">{product && product.name}</a>
             </div>
           </div>
         </div>
@@ -118,30 +139,75 @@ function SingleProduct() {
                     - {product.quantity}
                   </h6>
                   <div className="pdp-product__old-price">
-                    <span className="space__right--2-unit">Original Price:</span>
-                    <span className="regular-price">
-                      {priceFormat(currency, product.price)}
+                    <p>
+                      <strong>Brand : </strong>
+                      {product.brand && product.brand.name}
+                    </p>
+                    <p>
+                      <strong>Category : </strong>
+                      {product.category && product.category.name}
+                    </p>
+
+                    {product.subcategory && (
+                      <p>
+                        <strong>Sub Category : </strong>
+                        {product.subcategory.name}
+                      </p>
+                    )}
+
+                   <p>
+                   <span className="space__right--2-unit">
+                      Original Price:
                     </span>
+                    <span className="regular-price">
+                      {product.price && priceFormat(currency, product.price)}
+                    </span>
+                   </p>
                   </div>
 
-                  <div className="pdp-product__new-price">
+                  <p className="pdp-product__new-price pt-2">
                     <span className="space__right--2-unit">Selling price:</span>
                     <span className="pdp-product__price--new">
-                    {priceFormat(currency, product.priceAfterDiscount)}
-
+                      {product.priceAfterDiscount &&
+                        priceFormat(currency, product.priceAfterDiscount)}
                     </span>
                     <div className="pdp-product__tax-disclaimer">
                       (Inclusive of all taxes)
                     </div>
+                  </p>
+                  <p style={{ color:"black" }}>
+                    {product.summary && product.summary}
+                  </p>
+                  <div className="qty-group ">
+                    <div className="quantity buttons_added">
+                      <input
+                        type="button"
+                        defaultValue="-"
+                        className="minus minus-btn"
+                        onClick={() => decrementToCart(product._id)}
+                      />
+                      <input
+                        type="number"
+                        value={quantity}
+                        className="input-text qty text"
+                        disabled
+                      />
+                      <input
+                        type="button"
+                        defaultValue="+"
+                        className="plus plus-btn"
+                        onClick={() => incrementToCart(product._id)}
+                      />
+                    </div>
                   </div>
-
                   <button
                     type="button"
                     className="btn btn-secondary btn-lg"
-                    onClick={() => this.props.addToCart(product)}
+                    onClick={addToCartHandler}
                   >
                     <i className="mdi mdi-cart-outline" /> Add To Cart
                   </button>
+                 
                   <h6 className="mb-3 mt-4">Why shop from Groci?</h6>
                   <div className="row">
                     <div className="col-md-12">
@@ -176,7 +242,9 @@ function SingleProduct() {
                   </div>
                   <div className="pdpt-body scrollstyle_4">
                     <div className="pdct-dts-1 short-desc">
-                      {/* {parse(product.desc)} */}
+                      {product &&
+                        product.description &&
+                        parse(product.description)}
                     </div>
                   </div>
                 </div>
@@ -187,7 +255,6 @@ function SingleProduct() {
           )}
         </div>
       </section>
-
     </div>
   );
 }
