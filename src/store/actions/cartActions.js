@@ -1,4 +1,6 @@
 import http from "../../services/api";
+import { toast } from "react-toastify";
+import { ToastObjects } from "../../utils/toast/toastObject";
 import {
   ADD_TO_CART,
   REMOVE_FROM_CART,
@@ -27,6 +29,9 @@ export const addToCart = (id, quantity) => async (dispatch, getState) => {
 
   if (!alreadyExists) {
     cartItems.push({ ...product, quantity });
+    toast.success("Successfully added in cart", ToastObjects);
+  } else {
+    toast.warning("Item already in cart", ToastObjects);
   }
 
   dispatch({
@@ -47,6 +52,8 @@ export const incrementCart = (id) => (dispatch, getState) => {
     type: INCREASE_QUANTITY,
     payload: { cartItems },
   });
+  toast.success("Successfully updated item", ToastObjects);
+
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };
 
@@ -63,6 +70,8 @@ export const decrementCart = (id) => (dispatch, getState) => {
     type: DECREASE_QUANTITY,
     payload: { cartItems },
   });
+  toast.success("Successfully updated item", ToastObjects);
+
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };
 
@@ -75,6 +84,7 @@ export const removeFromCart = (id) => (dispatch, getState) => {
     type: REMOVE_FROM_CART,
     payload: { cartItems },
   });
+  toast.success("Successfully remove from cart.", ToastObjects);
 
   localStorage.removeItem("cartItems", JSON.stringify(cartItems));
 };

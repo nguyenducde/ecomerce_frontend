@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Home from "./views/home";
+import SingleProduct from "./views/product-details";
 import Checkout from "./views/checkout";
 import ConfirmOrder from "./views/checkout/complete";
 const loading = (
@@ -31,6 +32,11 @@ function App() {
         <Suspense fallback={loading}>
           <Routes>
             <Route exact path="/" name="home page" element={<Home />} />
+            <Route
+              exact
+              path="/product/:slug/:id"
+              element={<SingleProduct />}
+            />
             <Route
               exact
               path="/checkout"

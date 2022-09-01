@@ -90,7 +90,7 @@ function TopProducts() {
               products.map((product,index) => (
                   <div className="item" key={index}>
                     <div className="product">
-                      <Link to="">
+                      <Link to={{ pathname:`/product/${product.slug}/${product._id}`,state:product }}>
                         <div className="product-header">
                           {product && product.discount > 0 && (
                             <span className="badge badge-success">
