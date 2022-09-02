@@ -8,6 +8,7 @@ import { ToastObjects } from "../../utils/toast/toastObject";
 import http from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import { cartReset } from "../../store/actions/cartActions";
+import StripeCheckout from "react-stripe-checkout";
 function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,6 +59,47 @@ function Checkout() {
     } catch (e) {
       toast.error("Something went wrong. Please try again.", ToastObjects);
     }
+  };
+
+  const onToken = (token) => {
+    setState({
+      shippingAddress: {
+        name: token.card.name,
+        phone: "",
+        country: token.card.address_country,
+        postalCode: token.card.address_zip,
+        address: token.card.address_line1,
+      },
+    });
+    const makePayment = async () => {
+      const { shippingAddress } = state;
+      let orderId = Math.floor(
+        Math.random() * Math.floor(Math.random() * Date.now())
+      );
+
+      let data = {
+        customerId: customer._id,
+        paymentMethod: "stripe",
+        orderId: orderId,
+        shippingAddress: shippingAddress,
+        orderPrice: subTotal,
+        totalPrice: subTotal,
+        shippingPrice: 0,
+        cart: cartItems,
+        note: "",
+        discount: 0,
+      };
+      try {
+        let res = await http.post("/api/v1/user/order/place", data);
+        if (res && res.status) {
+          dispatch(cartReset());
+          navigate("/order/success", { replace: true });
+        }
+      } catch (e) {
+        toast.error("Something went wrong. Please try again.", ToastObjects);
+      }
+    };
+    makePayment();
   };
   return (
     <div>
@@ -171,21 +213,35 @@ function Checkout() {
                                       </label>
                                     </div>
                                   </li>
-                                  <li>
-                                    <div className="radio-item_1">
-                                      <input
-                                        value="card"
-                                        name="paymentMethod"
-                                        type="radio"
-                                      />
-                                      <label
-                                        htmlFor="card1"
-                                        className="radio-label_1"
-                                      >
-                                        e-Sewa
-                                      </label>
-                                    </div>
-                                  </li>
+                                  <StripeCheckout
+                                    name="Kosheli Express"
+                                    image="https://firebasestorage.googleapis.com/v0/b/mern-ecommerce-5b054.appspot.com/o/cart.png?alt=media&token=ccfcfabc-f6c5-41ba-9991-b0a2911ec44a"
+                                    billingAddress
+                                    shippingAddress
+                                    description={`Your total is ${priceFormat(
+                                      currency,
+                                      subTotal
+                                    )}`}
+                                    amount={subTotal * 100}
+                                    token={onToken}
+                                    stripeKey="pk_test_51Ivb1EKWmcMvWMrc8zHdmMdktWv8bAbywxvdNS2TzzJgq93J0u9lao33b4ScCEl3pkViZUDY9Py1JuI1uDfKtKna00a9D3UDcJ"
+                                  >
+                                    <li>
+                                      <div className="radio-item_1">
+                                        <input
+                                          value="stripe"
+                                          name="paymentMethod"
+                                          type="radio"
+                                        />
+                                        <label
+                                          htmlFor="card1"
+                                          className="radio-label_1"
+                                        >
+                                          Stripe
+                                        </label>
+                                      </div>
+                                    </li>
+                                  </StripeCheckout>
                                 </ul>
                               </div>
                               <button

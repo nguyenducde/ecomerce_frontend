@@ -64,13 +64,13 @@ export const decrementCart = (id) => (dispatch, getState) => {
   const value = cartItems[index];
   if (value.quantity > 1) {
     value.quantity = value.quantity - 1;
+    toast.success("Successfully updated item", ToastObjects);
   }
 
   dispatch({
     type: DECREASE_QUANTITY,
     payload: { cartItems },
   });
-  toast.success("Successfully updated item", ToastObjects);
 
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };

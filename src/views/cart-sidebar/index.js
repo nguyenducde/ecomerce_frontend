@@ -65,7 +65,9 @@ function CartSideBar() {
                   alt="cart"
                 />
                 {item.discount > 0 && (
-                  <div className="offer-badge">{item.discount}% OFF</div>
+                  <div className="offer-badge">
+                    {priceFormat(currency, item.discount)} OFF
+                  </div>
                 )}
               </div>
               <div className="cart-text">

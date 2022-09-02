@@ -6,6 +6,7 @@ import { ToastObjects } from "../../utils/toast/toastObject";
 import { useDispatch, useSelector } from "react-redux";
 import authServices from "../../services/authService";
 import homeServices from "../../services/homeServices";
+import { Link } from "react-router-dom";
 const Navigation = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.user.profile);
@@ -139,7 +140,8 @@ const Navigation = () => {
                               Orders List
                             </a>
                             <div className="dropdown-divider"></div>
-                            <span
+                            <Link
+                              to="#"
                               className="dropdown-item"
                               onClick={handleLogout}
                             >
@@ -148,7 +150,7 @@ const Navigation = () => {
                                 aria-hidden="true"
                               ></i>{" "}
                               Logout
-                            </span>
+                            </Link>
                           </div>
                         </div>
                       </>

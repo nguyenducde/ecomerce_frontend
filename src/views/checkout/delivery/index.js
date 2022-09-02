@@ -40,7 +40,7 @@ function DeliveryDetails({ onSelectDeliveryAddress }) {
                 className="form-control border-form-control"
                 type="text"
                 name="name"
-                disabled
+                placeholder="Full Name"
                 value={name}
                 onChange={handleChange}
               />
