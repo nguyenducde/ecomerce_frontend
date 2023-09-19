@@ -40,12 +40,12 @@ const Navigation = () => {
   return (
     <div>
       <header className="header clearfix">
-        <nav className="navbar navbar-light navbar-expand-lg bg-pink  bg-faded osahan-menu">
+        <nav className="navbar navbar-light navbar-expand-lg  bg-faded osahan-menu">
           <div className="container-fluid">
-            <a className="navbar-brand" href="/" style={{ color: "#fff" }}>
+            <a className="navbar-brand" href="/" >
              Trang chủ
             </a>
-            <a className="navbar-brand" href="/" style={{ color: "#fff" }}>
+            <a className="navbar-brand" href="/" >
              Sản phẩm
             </a>
             <button
@@ -142,7 +142,7 @@ const Navigation = () => {
                           data-toggle="modal"
                           className="btn"
                         >
-                          <i className="mdi mdi-account-circle" /> Login/Sign Up
+                          <i className="mdi mdi-account-circle" /> Đăng nhập
                         </a>
                       </>
                     )}

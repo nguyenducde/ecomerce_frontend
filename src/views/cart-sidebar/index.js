@@ -40,7 +40,7 @@ function CartSideBar() {
   return (
     <div>
       <span data-toggle="offcanvas" className="btn btn-link border-none">
-        <i className="mdi mdi-cart" /> My Cart{" "}
+        <i className="mdi mdi-cart" /> Giỏ hàng{" "}
         <small className="cart-value">{cartItems.length}</small>
       </span>
       <div className="cart-sidebar">
