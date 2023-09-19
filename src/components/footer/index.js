@@ -21,7 +21,7 @@ export default function Footer() {
                     <div className='footer-group__item footer-group__item--large'>
                         <h3 className='footer-group__item-heading'>TỔNG ĐÀI HỖ TRỢ</h3>
                         <p className='footer-group__item-content'>
-                            Liên hệ với tôi: <span>0365187553</span>
+                            Liên hệ với tôi: <span>093 324 86 66</span>
                         </p>
                         <p className='footer-group__item-content'>
                             Email: <span>shopauthenticdalat@gmail.com</span>

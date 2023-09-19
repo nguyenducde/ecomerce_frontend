@@ -11,6 +11,7 @@ import {
 function CartSideBar() {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state?.cart);
+  console.log(cartItems)
   const currency = useSelector((state) => state.home.settings)?.symbol;
   const subTotal = cartItems.reduce(
     (sum, i) => (sum += i.quantity * i.priceAfterDiscount),
