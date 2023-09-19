@@ -214,7 +214,7 @@ function Checkout() {
                                     </div>
                                   </li>
                                   <StripeCheckout
-                                    name="Kosheli Express"
+                                    name="Shop Authentic"
                                     image="https://firebasestorage.googleapis.com/v0/b/mern-ecommerce-5b054.appspot.com/o/cart.png?alt=media&token=ccfcfabc-f6c5-41ba-9991-b0a2911ec44a"
                                     billingAddress
                                     shippingAddress
