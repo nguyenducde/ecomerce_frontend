@@ -51,6 +51,7 @@ const homeServices = {
   getHomeSettings: async (dispatch) => {
     try {
       let res = await http.get("/api/v1/home/general-settings");
+      console.log(res)
       dispatch(getHomeSettings(res.data));
       return Promise.resolve(res);
     } catch (error) {

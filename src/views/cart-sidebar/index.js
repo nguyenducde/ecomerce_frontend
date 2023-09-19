@@ -12,7 +12,7 @@ function CartSideBar() {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state?.cart);
   console.log(cartItems)
-  const currency = useSelector((state) => state.home.settings)?.symbol;
+  const currency = "đ"
   const subTotal = cartItems.reduce(
     (sum, i) => (sum += i.quantity * i.priceAfterDiscount),
     0
@@ -67,7 +67,7 @@ function CartSideBar() {
                 />
                 {item.discount > 0 && (
                   <div className="offer-badge">
-                    {priceFormat(currency, item.discount)} OFF
+                    {item.discount + currency} OFF
                   </div>
                 )}
               </div>
@@ -102,12 +102,10 @@ function CartSideBar() {
                     </button>
                   </div>
                   <div className="cart-item-price">
-                    {priceFormat(
-                      currency,
-                      item.quantity * item.priceAfterDiscount
-                    )}
+                    {
+                      (item.quantity * item.priceAfterDiscount)+ currency}
                     <span>
-                      {priceFormat(currency, item.quantity * item.price)}
+                      {(item.quantity * item.price)+ currency}
                     </span>
                   </div>
                 </div>

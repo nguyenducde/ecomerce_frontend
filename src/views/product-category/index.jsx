@@ -17,7 +17,7 @@ function ProductCategory() {
 
   const [catId, setCatId] = useState();
   const match = useMatch("category/:slug/:id");
-  const currency = useSelector((state) => state.home.settings)?.symbol;
+  const currency = "đ"
 
   //   useEffect(() => {
   //     setFilteredProducts(

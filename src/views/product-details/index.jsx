@@ -16,7 +16,7 @@ function SingleProduct() {
   const [productId, setProductId] = useState("");
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  const currency = useSelector((state) => state.home.settings)?.symbol;
+  const currency = "đ"
   useEffect(() => {
     if (match) {
       setProductId(match.params.id);
@@ -128,7 +128,7 @@ function SingleProduct() {
                 <div className="shop-detail-right">
                   {product.discount && (
                     <span className="badge badge-success">
-                      {priceFormat(currency, product.discount)} OFF
+                      {product.discount +currency} OFF
                     </span>
                   )}
                   <h2>{product.name}</h2>
@@ -160,7 +160,7 @@ function SingleProduct() {
                         Original Price:
                       </span>
                       <span className="regular-price">
-                        {product.price && priceFormat(currency, product.price)}
+                        {product.price + currency}
                       </span>
                     </p>
                   </div>
@@ -169,7 +169,7 @@ function SingleProduct() {
                     <span className="space__right--2-unit">Selling price:</span>
                     <span className="pdp-product__price--new">
                       {product.priceAfterDiscount &&
-                        priceFormat(currency, product.priceAfterDiscount)}
+                       product.priceAfterDiscount +currency}
                     </span>
                     <div className="pdp-product__tax-disclaimer">
                       (Inclusive of all taxes)

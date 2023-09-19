@@ -19,7 +19,6 @@ export const addToCart = (id, quantity) => async (dispatch, getState) => {
     discount: data.discount,
     image: data.thumbnailImage,
   };
-  console.log(product);
   const cartItems = getState().cart.cartItems.slice();
   let alreadyExists = false;
   cartItems.forEach((item) => {

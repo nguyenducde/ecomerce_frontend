@@ -10,7 +10,7 @@ import { addToCart } from "../../../store/actions/cartActions";
 function TopProducts() {
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  const currency = useSelector((state) => state.home.settings)?.symbol;
+  const currency = "đ"
   let products = useSelector((state) => state.home.topProducts);
 
   useEffect(() => {
