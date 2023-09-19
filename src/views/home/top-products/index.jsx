@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +8,9 @@ import { ToastObjects } from "../../../utils/toast/toastObject";
 import { UPLOAD_URL } from "../../../config";
 import { addToCart } from "../../../store/actions/cartActions";
 function TopProducts() {
-  const [quantity,setQuantity]=useState(1);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  const currency = useSelector((state) => state.home.settings).symbol;
+  const currency = useSelector((state) => state.home.settings)?.symbol;
   let products = useSelector((state) => state.home.topProducts);
 
   useEffect(() => {
@@ -23,11 +23,11 @@ function TopProducts() {
     };
     getCategories();
   }, [dispatch]);
-  
-  const addToCartHandler= (id) => {
+
+  const addToCartHandler = (id) => {
     console.log(id);
-    dispatch(addToCart(id,quantity));
-  }
+    dispatch(addToCart(id, quantity));
+  };
 
   var settings = {
     dots: false,
@@ -87,54 +87,59 @@ function TopProducts() {
           <Slider {...settings}>
             {products &&
               products.length > 0 &&
-              products.map((product,index) => (
-                  <div className="item" key={index}>
-                    <div className="product">
-                      <Link to={{ pathname:`/product/${product.slug}/${product._id}`,state:product }}>
-                        <div className="product-header">
-                          {product && product.discount > 0 && (
-                            <span className="badge badge-success">
-                              {currency}
-                              {product.discount} OFF
-                            </span>
-                          )}
-                          <img
-                            className="img-fluid"
-                            src={UPLOAD_URL + product.thumbnailImage}
-                            alt="product"
-                          />
-                        </div>
-                        <div className="product-body">
-                          <h5>{product.name}</h5>
-                          <h6>
-                            <strong>
-                              <span className="mdi mdi-approval" /> Available in
-                            </strong>{" "}
-                            - {product.quantity}
-                          </h6>
-                        </div>
-                      </Link>
-                      <div className="product-footer">
-                        <button
-                        onClick={()=>addToCartHandler(product._id)}
-                          type="button"
-                          className="btn btn-secondary btn-sm float-right"
-                        >
-                          <i className="mdi mdi-cart-outline" /> Add To Cart
-                        </button>
-                        <p className="offer-price mb-0">
-                          {currency}
-                          {product.priceAfterDiscount}{" "}
-                          <i className="mdi mdi-tag-outline" />
-                          <br />
-                          <span className="regular-price">
+              products.map((product, index) => (
+                <div className="item" key={index}>
+                  <div className="product">
+                    <Link
+                      to={{
+                        pathname: `/product/${product.slug}/${product._id}`,
+                        state: product,
+                      }}
+                    >
+                      <div className="product-header">
+                        {product && product.discount > 0 && (
+                          <span className="badge badge-success">
                             {currency}
-                            {product.price}
+                            {product.discount} OFF
                           </span>
-                        </p>
+                        )}
+                        <img
+                          className="img-fluid"
+                          src={UPLOAD_URL + product.thumbnailImage}
+                          alt="product"
+                        />
                       </div>
+                      <div className="product-body">
+                        <h5>{product.name}</h5>
+                        <h6>
+                          <strong>
+                            <span className="mdi mdi-approval" /> Available in
+                          </strong>{" "}
+                          - {product.quantity}
+                        </h6>
+                      </div>
+                    </Link>
+                    <div className="product-footer">
+                      <button
+                        onClick={() => addToCartHandler(product._id)}
+                        type="button"
+                        className="btn btn-secondary btn-sm float-right"
+                      >
+                        <i className="mdi mdi-cart-outline" /> Add To Cart
+                      </button>
+                      <p className="offer-price mb-0">
+                        {currency}
+                        {product.priceAfterDiscount}{" "}
+                        <i className="mdi mdi-tag-outline" />
+                        <br />
+                        <span className="regular-price">
+                          {currency}
+                          {product.price}
+                        </span>
+                      </p>
                     </div>
                   </div>
+                </div>
               ))}
           </Slider>
         </div>

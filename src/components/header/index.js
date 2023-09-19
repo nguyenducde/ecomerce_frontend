@@ -6,6 +6,7 @@ import { ToastObjects } from "../../utils/toast/toastObject";
 import { useDispatch, useSelector } from "react-redux";
 import authServices from "../../services/authService";
 import homeServices from "../../services/homeServices";
+import logo from "../assets/images/favicon.png"
 import { Link } from "react-router-dom";
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -39,10 +40,13 @@ const Navigation = () => {
   return (
     <div>
       <header className="header clearfix">
-        <nav className="navbar navbar-light navbar-expand-lg bg-dark bg-faded osahan-menu">
+        <nav className="navbar navbar-light navbar-expand-lg bg-pink  bg-faded osahan-menu">
           <div className="container-fluid">
             <a className="navbar-brand" href="/" style={{ color: "#fff" }}>
-              Kosheli Express
+             Trang chủ
+            </a>
+            <a className="navbar-brand" href="/" style={{ color: "#fff" }}>
+             Sản phẩm
             </a>
             <button
               className="navbar-toggler navbar-toggler-white"
@@ -57,31 +61,7 @@ const Navigation = () => {
             </button>
             <div className="navbar-collapse" id="navbarNavDropdown">
               <div className="navbar-nav mr-auto mt-2 mt-lg-0 margin-auto top-categories-search-main">
-                <div
-                  className="top-categories-search"
-                  //   onSubmit={this.handleClickSearch}
-                >
-                  <div className="input-group">
-                    <input
-                      className="form-control"
-                      placeholder="Search products in Your City"
-                      aria-label="Search products in Your City"
-                      type="text"
-                      name="searchtxt"
-                      //   value={searchtxt}
-                      //   onChange={(e) => this.handleChange(e)}
-                    />
-                    <span className="input-group-btn">
-                      <button
-                        className="btn btn-secondary"
-                        type="submit"
-                        // onClick={this.handleClickSearch}
-                      >
-                        <i className="mdi mdi-file-find" /> Search
-                      </button>
-                    </span>
-                  </div>
-                </div>
+                {/* <img src={logo}/> */}
               </div>
               <div className="my-2 my-lg-0">
                 <ul className="list-inline main-nav-right">
@@ -160,7 +140,7 @@ const Navigation = () => {
                           href=""
                           data-target="#bd-example-modal"
                           data-toggle="modal"
-                          className="btn btn-link"
+                          className="btn"
                         >
                           <i className="mdi mdi-account-circle" /> Login/Sign Up
                         </a>

@@ -13,8 +13,8 @@ function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const customer = useSelector((state) => state.user.profile);
-  const { cartItems } = useSelector((state) => state.cart);
-  const currency = useSelector((state) => state.home.settings).symbol;
+  const { cartItems } = useSelector((state) => state?.cart);
+  const currency = useSelector((state) => state.home.settings)?.symbol;
   const subTotal = cartItems.reduce(
     (sum, item) => (sum += item.quantity * item.priceAfterDiscount),
     0

@@ -16,7 +16,7 @@ function SingleProduct() {
   const [productId, setProductId] = useState("");
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  const currency = useSelector((state) => state.home.settings).symbol;
+  const currency = useSelector((state) => state.home.settings)?.symbol;
   useEffect(() => {
     if (match) {
       setProductId(match.params.id);
@@ -155,14 +155,14 @@ function SingleProduct() {
                       </p>
                     )}
 
-                   <p>
-                   <span className="space__right--2-unit">
-                      Original Price:
-                    </span>
-                    <span className="regular-price">
-                      {product.price && priceFormat(currency, product.price)}
-                    </span>
-                   </p>
+                    <p>
+                      <span className="space__right--2-unit">
+                        Original Price:
+                      </span>
+                      <span className="regular-price">
+                        {product.price && priceFormat(currency, product.price)}
+                      </span>
+                    </p>
                   </div>
 
                   <p className="pdp-product__new-price pt-2">
@@ -175,7 +175,7 @@ function SingleProduct() {
                       (Inclusive of all taxes)
                     </div>
                   </p>
-                  <p style={{ color:"black" }}>
+                  <p style={{ color: "black" }}>
                     {product.summary && product.summary}
                   </p>
                   <div className="qty-group ">
@@ -207,7 +207,7 @@ function SingleProduct() {
                   >
                     <i className="mdi mdi-cart-outline" /> Add To Cart
                   </button>
-                 
+
                   <h6 className="mb-3 mt-4">Why shop from Groci?</h6>
                   <div className="row">
                     <div className="col-md-12">

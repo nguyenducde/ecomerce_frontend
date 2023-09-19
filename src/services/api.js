@@ -1,10 +1,16 @@
 import axios from "axios";
 import { API_URL } from "../config";
+
 const http = axios.create({
   baseURL: API_URL,
+  method: "post",
+  headers: {
+    Accept: "application/json, text/plain, */*",
+    "Content-Type": "application/json",
+  },
 });
 
-http.defaults.headers.post["Content-Type"] = "application/json";
+//  http.defaults.headers.post["Content-Type"] = "application/json";
 
 http.interceptors.request.use(function (config) {
   const accessToken = localStorage.getItem("accessToken");

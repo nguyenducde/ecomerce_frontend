@@ -3,7 +3,14 @@ import { getUserProfile, loginUser } from "../store/actions/authActions";
 const authServices = {
   loginUser: async (data, dispatch) => {
     try {
-      let res = await http.post("/api/v1/auth/login", data);
+      let res = await http
+        .post("/api/v1/auth/login", JSON.stringify(data))
+        .then((result) => {
+          console.log(result.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       console.log(res);
       if (res.accessToken) {
         localStorage.setItem("accessToken", res.accessToken);
@@ -17,7 +24,7 @@ const authServices = {
 
   registerUser: async (data, dispatch) => {
     try {
-      let res = await http.post("/api/v1/auth/register", data);
+      let res = await http.post("/api/v1/auth/register", JSON.stringify(data));
       if (res.accessToken) {
         localStorage.setItem("accessToken", res.accessToken);
       }

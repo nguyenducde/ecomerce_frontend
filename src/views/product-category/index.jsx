@@ -8,24 +8,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { priceFormat } from "../../utils/helper";
 import { addToCart } from "../../store/actions/cartActions";
 function ProductCategory() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [category, setCategory] = useState();
-//   const [filters,setFilters]=useState({});
-  const [sort,setSort]=useState('newest')
+  //   const [filters,setFilters]=useState({});
+  const [sort, setSort] = useState("newest");
 
   const [catId, setCatId] = useState();
   const match = useMatch("category/:slug/:id");
-  const currency = useSelector((state) => state.home.settings).symbol;
-  
-//   useEffect(() => {
-//     setFilteredProducts(
-//         products.filter((item)=>
-//         Object.entries(filters).every(([key,value])=>
-//         item[key].includes(value)))
-//     )
-//   },[products,filters])
+  const currency = useSelector((state) => state.home.settings)?.symbol;
+
+  //   useEffect(() => {
+  //     setFilteredProducts(
+  //         products.filter((item)=>
+  //         Object.entries(filters).every(([key,value])=>
+  //         item[key].includes(value)))
+  //     )
+  //   },[products,filters])
   useEffect(() => {
     if (match) {
       setCatId(match.params.id);
@@ -57,42 +57,46 @@ function ProductCategory() {
     getProductsByCat();
     getCategory();
   }, [catId]);
-  
-//   const handleFilter=(e)=>{
-//     const value = e.target.value;
-//     setFilters({
-//         ...filters,
-//         [e.target.name]:value.toLowerCase()
-//     });
-//   }
-useEffect(() => {
-    if(sort==="newest"){
-        setFilteredProducts((prev)=>
-        [...products].sort((a,b)=>a.createdAt - b.createdAt)
-        )
+
+  //   const handleFilter=(e)=>{
+  //     const value = e.target.value;
+  //     setFilters({
+  //         ...filters,
+  //         [e.target.name]:value.toLowerCase()
+  //     });
+  //   }
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProducts((prev) =>
+        [...products].sort((a, b) => a.createdAt - b.createdAt)
+      );
     }
-    if(sort==="priceAsc"){
-        setFilteredProducts((prev)=>
-        [...products].sort((a,b)=>a.priceAfterDiscount - b.priceAfterDiscount)
+    if (sort === "priceAsc") {
+      setFilteredProducts((prev) =>
+        [...products].sort(
+          (a, b) => a.priceAfterDiscount - b.priceAfterDiscount
         )
+      );
     }
-    
-    if(sort==="priceDec"){
-        setFilteredProducts((prev)=>
-        [...products].sort((a,b)=>b.priceAfterDiscount - a.priceAfterDiscount)
+
+    if (sort === "priceDec") {
+      setFilteredProducts((prev) =>
+        [...products].sort(
+          (a, b) => b.priceAfterDiscount - a.priceAfterDiscount
         )
+      );
     }
-    if(sort==="alphaAsc"){
-        setFilteredProducts((prev)=>
-        [...products].sort((a,b)=>a.title > b.title ? 1 : -1)
-        )
+    if (sort === "alphaAsc") {
+      setFilteredProducts((prev) =>
+        [...products].sort((a, b) => (a.title > b.title ? 1 : -1))
+      );
     }
-    if(sort==="alphaDesc"){
-        setFilteredProducts((prev)=>
-        [...products].sort((a,b)=>a.title > b.title ? -1 : 1)
-        )
+    if (sort === "alphaDesc") {
+      setFilteredProducts((prev) =>
+        [...products].sort((a, b) => (a.title > b.title ? -1 : 1))
+      );
     }
-},[sort,products])
+  }, [sort, products]);
   const addToCartHandler = (id) => {
     dispatch(addToCart(id, 1));
   };
@@ -125,7 +129,10 @@ useEffect(() => {
                 </div>
                 {/* <FilterCategorySidebar /> */}
                 <div className="product-sort">
-                  <select className="form-control" onChange={(e)=>setSort(e.target.value)}>
+                  <select
+                    className="form-control"
+                    onChange={(e) => setSort(e.target.value)}
+                  >
                     <option className="item" value="">
                       Sort by Products
                     </option>
@@ -138,7 +145,7 @@ useEffect(() => {
                     <option className="item" value="alphaAsc">
                       Alphabetical Ascending
                     </option>
-                    
+
                     <option className="item" value="alphaDesc">
                       Alphabetical descending
                     </option>
@@ -158,7 +165,7 @@ useEffect(() => {
               <div className="row">
                 {filteredProducts &&
                   filteredProducts.length > 0 &&
-                  filteredProducts.slice(0,8).map((product,index) => (
+                  filteredProducts.slice(0, 8).map((product, index) => (
                     <div className="col-md-3" key={index}>
                       <div className="item">
                         <div className="product">
@@ -194,7 +201,7 @@ useEffect(() => {
                           <div className="product-footer">
                             <button
                               type="button"
-                              onClick={() =>addToCartHandler(product._id)}
+                              onClick={() => addToCartHandler(product._id)}
                               className="btn btn-secondary btn-sm float-right"
                             >
                               <i className="mdi mdi-cart-outline" /> Add To Cart
@@ -216,7 +223,6 @@ useEffect(() => {
                     </div>
                   ))}
               </div>
-
             </div>
           </div>
         </div>

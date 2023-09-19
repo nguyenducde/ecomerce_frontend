@@ -10,8 +10,8 @@ import {
 } from "../../store/actions/cartActions";
 function CartSideBar() {
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state.cart);
-  const currency = useSelector((state) => state.home.settings).symbol;
+  const { cartItems } = useSelector((state) => state?.cart);
+  const currency = useSelector((state) => state.home.settings)?.symbol;
   const subTotal = cartItems.reduce(
     (sum, i) => (sum += i.quantity * i.priceAfterDiscount),
     0
