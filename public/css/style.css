@@ -373,8 +373,8 @@ a:focus {
     text-decoration: none;
 }
 .main-nav-right .btn:hover {
-     background-color: #384042 !important;
-     color: #fff !important;
+     background-color: #8b989b !important;
+     color: black !important;
 }
 .main-nav-right li {
     margin: 0 !important;
@@ -3489,3 +3489,7 @@ i.icon1 {
 }
 
 /* --- Index Page --- */
+
+@media (max-width: 768px) { 
+
+}
